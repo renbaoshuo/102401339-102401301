@@ -42,10 +42,7 @@ yarn web          # 浏览器
 ├── assets/                 # 图标、启动图等静态资源
 ├── docs/                   # 作业文档与设计稿
 └── src/
-    ├── app/                # Expo Router 页面（文件式路由）
-    ├── components/         # 通用组件
-    ├── constants/          # 主题常量
-    └── hooks/              # 自定义 Hooks
+    └── app/                # Expo Router 页面（文件式路由，业务代码放 src/ 下）
 ```
 
 ## About
