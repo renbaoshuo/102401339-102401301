@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { Pressable, TextInput, View } from 'react-native';
 
 import { SearchIcon } from '@/components/icons/lucide-icons';
@@ -9,6 +10,11 @@ type SearchBarProps = {
 };
 
 export function SearchBar({ value, onChangeText, onSubmit }: SearchBarProps) {
+  const openSearch = () => {
+    onSubmit();
+    router.push(value.trim() ? { pathname: '/search', params: { q: value.trim() } } : '/search');
+  };
+
   return (
     <View className="mx-[18px] h-[55px] flex-row items-center rounded-full bg-[#FFFDF9] pl-[24px]">
       <SearchIcon size={21} color="#898C86" strokeWidth={2.1} />
@@ -18,13 +24,13 @@ export function SearchBar({ value, onChangeText, onSubmit }: SearchBarProps) {
         placeholderTextColor="#898C86"
         value={value}
         onChangeText={onChangeText}
-        onSubmitEditing={onSubmit}
+        onSubmitEditing={openSearch}
         returnKeyType="search"
         underlineColorAndroid="transparent"
       />
       <Pressable
         className="mr-[5px] size-[46px] items-center justify-center rounded-full bg-[#5F834B]"
-        onPress={onSubmit}
+        onPress={openSearch}
         accessibilityRole="button"
         accessibilityLabel="搜索"
         hitSlop={4}
