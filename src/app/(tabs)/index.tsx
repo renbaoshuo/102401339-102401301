@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-neutral-950">
+    <SafeAreaView edges={['top', 'left', 'right']} className="flex-1 bg-white dark:bg-neutral-950">
       <View className="flex-1 items-center justify-center gap-4 px-6">
         <View className="size-20 items-center justify-center rounded-3xl bg-sky-500/10">
           <Text className="text-4xl">🎒</Text>
@@ -17,7 +17,7 @@ export default function HomeScreen() {
           </Text>
         </View>
         <Text className="text-sm text-neutral-500 dark:text-neutral-400">
-          编辑 src/app/index.tsx 开始开发
+          编辑 src/app/(tabs)/index.tsx 开始开发
         </Text>
       </View>
     </SafeAreaView>
