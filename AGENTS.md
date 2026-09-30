@@ -42,3 +42,17 @@ Docs: <https://www.nativewind.dev/llms.txt>
 ## Resources
 
 Resources and goals of this project are placed under `docs/` and can be used as reference. DO NOT add anything here during your work process.
+
+## Commit Messages
+
+Use conventional commits for all commit messages. Format: `<type>: <subject>`.
+
+- Types:
+  - `feat`: new features
+  - `fix`: bug fixes
+  - `chore`: maintenance tasks
+  - `refactor`: code refactoring
+  - NO ANY OTHER TYPES
+- Subject must be a short, imperative description of the change.
+- Subject MUST BE written in lowercase, no ANY capital letters.
+- DO NOT include a commit message description.
