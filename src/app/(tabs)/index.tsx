@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { FlatList, Keyboard, Text, View } from 'react-native';
+import { router } from 'expo-router';
 
 import { FilterTabs, type HomeFilter } from '@/components/home/filter-tabs';
 import { HeroBanner } from '@/components/home/hero-banner';
@@ -35,7 +36,7 @@ export default function HomeScreen() {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View className="px-[16px]">
-            <ItemCard item={item} />
+            <ItemCard item={item} onPress={() => router.push({ pathname: '/detail/[id]', params: { id: item.id } })} />
           </View>
         )}
         ItemSeparatorComponent={() => <View className="h-[6px]" />}

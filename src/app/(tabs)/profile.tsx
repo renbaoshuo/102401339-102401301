@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -17,6 +18,10 @@ export default function ProfileScreen() {
     setPosts(prev => prev.filter(post => post.id !== id));
   };
 
+  const openDetail = (id: string) => {
+    router.push({ pathname: '/detail/[id]', params: { id } });
+  };
+
   return (
     <SafeAreaView edges={['top', 'left', 'right']} className="flex-1 bg-[#F8F4ED]">
       <FlatList
@@ -29,7 +34,7 @@ export default function ProfileScreen() {
             <MyPostCard
               item={item}
               onEdit={() => {}}
-              onViewDetail={() => {}}
+              onViewDetail={() => openDetail(item.id)}
               onMarkReturned={() => markReturned(item.id)}
               onDelete={() => remove(item.id)}
             />
