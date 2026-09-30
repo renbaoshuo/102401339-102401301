@@ -1,4 +1,4 @@
-import { Image, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 
 import { CalendarDaysIcon, MapPinIcon } from '@/components/icons/lucide-icons';
 import { ITEM_TYPE_LABEL, type CampusItem } from '@/data/mock-items';
@@ -8,10 +8,20 @@ const BADGE_STYLE: Record<CampusItem['type'], { bg: string; text: string }> = {
   found: { bg: '#F8DFA5', text: '#786234' },
 };
 
-export function ItemCard({ item }: { item: CampusItem }) {
+type ItemCardProps = {
+  item: CampusItem;
+  onPress?: () => void;
+};
+
+export function ItemCard({ item, onPress }: ItemCardProps) {
   const badge = BADGE_STYLE[item.type];
   return (
-    <View className="flex-row rounded-[14px] bg-[#FFFDF9] p-[5px]">
+    <Pressable
+      className="flex-row rounded-[14px] bg-[#FFFDF9] p-[5px]"
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${item.title}，${ITEM_TYPE_LABEL[item.type]}，${item.location}`}
+    >
       <Image
         source={item.image}
         className="h-[81px] w-[102px] rounded-[12px] bg-[#F0E4DA]"
@@ -42,6 +52,6 @@ export function ItemCard({ item }: { item: CampusItem }) {
           <Text className="text-[13px] text-[#898C86]">{item.date}</Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }

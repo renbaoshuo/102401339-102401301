@@ -44,7 +44,7 @@ export const MY_POSTS: MyPostItem[] = [
     thumbTint: '#DFD4BF',
   },
   {
-    id: '2',
+    id: '4',
     status: 'found',
     title: '白色保温杯',
     date: '2024-05-17',
@@ -53,7 +53,7 @@ export const MY_POSTS: MyPostItem[] = [
     thumbTint: '#DDD8C2',
   },
   {
-    id: '3',
+    id: '5',
     status: 'returned',
     title: '钥匙串',
     date: '2024-05-12',

@@ -116,7 +116,12 @@ export default function SearchScreen() {
           className="mt-[18px] flex-1"
           data={results}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => <SearchResultCard item={item} />}
+          renderItem={({ item }) => (
+            <SearchResultCard
+              item={item}
+              onPress={() => router.push({ pathname: '/detail/[id]', params: { id: item.id } })}
+            />
+          )}
           ItemSeparatorComponent={() => <View className="h-[6px]" />}
           contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 24 }}
           keyboardShouldPersistTaps="handled"
