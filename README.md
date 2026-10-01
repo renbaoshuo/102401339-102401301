@@ -8,10 +8,11 @@
 - TypeScript
 - Expo Router（文件式路由，代码在 `src/app`）
 - [NativeWind](https://www.nativewind.dev/) v4 + Tailwind CSS v3
+- 数据存储在 Android/iOS 平台上使用 Expo SQLite，Web 使用 IndexedDB
 
 ## 环境要求
 
-- Node.js ≥ 20（建议通过 nvm 安装）
+- Node.js ≥ 20.19
 - yarn 1.22.22
 
 ## 快速开始
@@ -42,7 +43,11 @@ yarn web          # 浏览器
 ├── assets/                 # 图标、启动图等静态资源
 ├── docs/                   # 作业文档与设计稿
 └── src/
-    └── app/                # Expo Router 页面（文件式路由，业务代码放 src/ 下）
+    ├── app/                # Expo Router 页面
+    ├── components/         # 组件库
+    ├── data/               # 固定个人资料等展示配置
+    ├── features/items/     # 物品模型、业务服务、查询规则和共享 hooks
+    └── storage/            # SQLite / IndexedDB、版本初始化和种子数据
 ```
 
 ## About

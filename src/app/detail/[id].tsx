@@ -22,13 +22,14 @@ import {
   PhoneIcon,
 } from '@/components/icons/lucide-icons';
 import {
-  getItemById,
   ITEM_KIND_LABEL,
   ITEM_KIND_STYLE,
-  ITEM_STATUS_STYLE,
-  ITEM_TYPE_LABEL,
-  type CampusItem,
-} from '@/data/mock-items';
+  getItemStatusLabel,
+  getItemStatusStyle,
+} from '@/features/items/item-presentation';
+import type { CampusItem } from '@/features/items/item';
+import { getItemImageSource } from '@/features/items/item-images';
+import { useItem } from '@/features/items/items-context';
 
 const HERO_IMAGE = require('@/assets/images/home/detail-hero.jpg');
 // 设计稿 hero 区域 402x274
@@ -36,21 +37,21 @@ const HERO_RATIO = 402 / 274;
 
 // 设计稿仅提供了蓝色校园卡的实拍 hero,其余物品用物品图衬在暖色底上
 function ItemHero({ item, height }: { item: CampusItem; height: number }) {
-  if (item.id === '2') {
+  if (item.id === '2' && item.imageAssetKey === 'campus-card' && !item.imageUri) {
     return (
       <Image source={HERO_IMAGE} style={{ width: '100%', height }} resizeMode="cover" />
     );
   }
   return (
     <View style={{ height }} className="items-center justify-center bg-[#EDE4D6]">
-      <Image source={item.image} style={{ width: '72%', height: '78%' }} resizeMode="contain" />
+      <Image source={getItemImageSource(item)} style={{ width: '72%', height: '78%' }} resizeMode="contain" />
     </View>
   );
 }
 
 export default function ItemDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const item = getItemById(id);
+  const item = useItem(id);
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const heroHeight = Math.round(width / HERO_RATIO);
@@ -103,7 +104,7 @@ export default function ItemDetailScreen() {
   }
 
   const kind = ITEM_KIND_STYLE[item.type];
-  const status = ITEM_STATUS_STYLE[item.type];
+  const status = getItemStatusStyle(item);
   const timeLabel = item.type === 'found' ? '捡到时间' : '丢失时间';
   const placeLabel = item.type === 'found' ? '捡到地点' : '丢失地点';
 
@@ -137,7 +138,7 @@ export default function ItemDetailScreen() {
             </Text>
             <View className="ml-3 flex-row gap-[13px]">
               <DetailBadge label={ITEM_KIND_LABEL[item.type]} bg={kind.bg} color={kind.text} />
-              <DetailBadge label={ITEM_TYPE_LABEL[item.type]} bg={status.bg} color={status.text} />
+              <DetailBadge label={getItemStatusLabel(item)} bg={status.bg} color={status.text} />
             </View>
           </View>
           <View className="mt-[23px] gap-[11px] px-[21px]">

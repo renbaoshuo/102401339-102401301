@@ -1,6 +1,6 @@
 import { Pressable, Text, View } from 'react-native';
 
-import { AREA_OPTIONS, TIME_OPTIONS, type AreaOption, type TimeOption } from '@/data/mock-items';
+import { AREA_OPTIONS, TIME_OPTIONS, type AreaOption, type TimeOption } from '@/features/items/item-query';
 
 type FilterPanelProps = {
   area: AreaOption;

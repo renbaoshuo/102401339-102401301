@@ -6,25 +6,15 @@ import { FilterTabs, type HomeFilter } from '@/components/home/filter-tabs';
 import { HeroBanner } from '@/components/home/hero-banner';
 import { ItemCard } from '@/components/home/item-card';
 import { SearchBar } from '@/components/home/search-bar';
-import { MOCK_ITEMS } from '@/data/mock-items';
+import { queryItems } from '@/features/items/item-query';
+import { useItems } from '@/features/items/items-context';
 
 export default function HomeScreen() {
   const [filter, setFilter] = useState<HomeFilter>('all');
   const [query, setQuery] = useState('');
+  const { items: allItems, refreshing, refresh, error } = useItems();
 
-  const items = useMemo(() => {
-    const keyword = query.trim().toLowerCase();
-    return MOCK_ITEMS.filter((item) => {
-      if (filter !== 'all' && item.type !== filter) {
-        return false;
-      }
-      if (!keyword) {
-        return true;
-      }
-      return item.title.toLowerCase().includes(keyword)
-        || item.location.toLowerCase().includes(keyword);
-    });
-  }, [filter, query]);
+  const items = useMemo(() => queryItems(allItems, { type: filter, keyword: query }), [allItems, filter, query]);
 
   const dismissKeyboard = () => Keyboard.dismiss();
 
@@ -33,6 +23,9 @@ export default function HomeScreen() {
       <FlatList
         className="flex-1"
         data={items}
+        refreshing={refreshing}
+        onRefresh={() => void refresh()}
+        ListFooterComponent={error ? <Text className="p-4 text-center text-[#9E534F]">{error}</Text> : null}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View className="px-[16px]">

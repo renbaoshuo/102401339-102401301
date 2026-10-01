@@ -1,14 +1,13 @@
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { MapPinIcon } from '@/components/icons/lucide-icons';
-import {
-  MY_POST_STATUS_LABEL,
-  MY_POST_STATUS_STYLE,
-  type MyPostItem,
-} from '@/data/my-posts';
+import type { CampusItem } from '@/features/items/item';
+import { getItemImageSource, getItemThumbTint } from '@/features/items/item-images';
+import { getItemStatusLabel, getItemStatusStyle } from '@/features/items/item-presentation';
 
 type MyPostCardProps = {
-  item: MyPostItem;
+  item: CampusItem;
+  disabled?: boolean;
   onEdit: () => void;
   onMarkReturned: () => void;
   onViewDetail: () => void;
@@ -21,25 +20,23 @@ type CardAction = {
   onPress: () => void;
 };
 
-export function MyPostCard({ item, onEdit, onMarkReturned, onViewDetail, onDelete }: MyPostCardProps) {
-  const badge = MY_POST_STATUS_STYLE[item.status];
+export function MyPostCard({ item, disabled, onEdit, onMarkReturned, onViewDetail, onDelete }: MyPostCardProps) {
+  const badge = getItemStatusStyle(item);
 
-  const primary: CardAction = item.status === 'returned'
+  const primary: CardAction = item.status === 'resolved'
     ? { label: '查看详情', onPress: onViewDetail }
     : { label: '编辑', onPress: onEdit };
 
-  const secondary: CardAction = item.status === 'lost'
-    ? { label: '改为已找回', accent: true, onPress: onMarkReturned }
-    : item.status === 'found'
-      ? { label: '查看详情', onPress: onViewDetail }
-      : { label: '删除', onPress: onDelete };
+  const secondary: CardAction = item.status === 'active'
+    ? { label: item.type === 'lost' ? '改为已找回' : '改为已归还', accent: true, onPress: onMarkReturned }
+    : { label: '删除', onPress: onDelete };
 
   return (
     <View className="h-[108px] flex-row rounded-[15px] bg-[#FFFDF9] pl-[7px]">
       <Image
-        source={item.image}
+        source={getItemImageSource(item)}
         className="h-[71px] w-[91px] self-center rounded-[8px]"
-        style={{ backgroundColor: item.thumbTint }}
+        style={{ backgroundColor: getItemThumbTint(item) }}
         resizeMode="contain"
       />
       <View className="flex-1 pl-[13px] pr-[16px] pt-[13px]">
@@ -52,7 +49,7 @@ export function MyPostCard({ item, onEdit, onMarkReturned, onViewDetail, onDelet
             style={{ backgroundColor: badge.bg }}
           >
             <Text className="text-[13px] font-semibold" style={{ color: badge.text }}>
-              {MY_POST_STATUS_LABEL[item.status]}
+              {getItemStatusLabel(item)}
             </Text>
           </View>
         </View>
@@ -65,12 +62,13 @@ export function MyPostCard({ item, onEdit, onMarkReturned, onViewDetail, onDelet
           </Text>
         </View>
         <View className="mt-[6px] h-[28px] flex-row gap-[9px] pl-[6px]">
-          <ActionButton label={primary.label} onPress={primary.onPress} width={103} />
+          <ActionButton label={primary.label} onPress={primary.onPress} width={103} disabled={disabled} />
           <ActionButton
             label={secondary.label}
             accent={secondary.accent}
             onPress={secondary.onPress}
             width={121}
+            disabled={disabled}
           />
         </View>
       </View>
@@ -83,17 +81,21 @@ function ActionButton({
   onPress,
   width,
   accent = false,
+  disabled = false,
 }: {
   label: string;
   onPress: () => void;
   width: number;
   accent?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <Pressable
       className="h-[28px] items-center justify-center rounded-[14px] border border-[#CFC8BE] bg-[#FFFDF9]"
-      style={{ width }}
       onPress={onPress}
+      disabled={disabled}
+      accessibilityState={{ disabled }}
+      style={{ opacity: disabled ? 0.5 : 1, width }}
       accessibilityRole="button"
     >
       <Text className={`text-[13px] font-medium ${accent ? 'text-[#5F834B]' : 'text-[#292D29]'}`}>

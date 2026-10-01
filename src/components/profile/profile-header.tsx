@@ -1,9 +1,15 @@
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { SettingsIcon } from '@/components/icons/lucide-icons';
-import { PROFILE } from '@/data/my-posts';
+import { PROFILE } from '@/data/profile';
+import type { getProfileStats } from '@/features/items/item-query';
 
-export function ProfileHeader() {
+export function ProfileHeader({ stats }: { stats: ReturnType<typeof getProfileStats> }) {
+  const displayStats = [
+    { value: stats.published, label: '我发布的' },
+    { value: stats.resolved, label: '已完成' },
+    { value: stats.active, label: '进行中' },
+  ];
   return (
     <View>
       <View className="items-end pr-[28px] pt-[15px]">
@@ -24,7 +30,7 @@ export function ProfileHeader() {
         </View>
       </View>
       <View className="mt-[30px] flex-row px-[19px]">
-        {PROFILE.stats.map(stat => (
+        {displayStats.map(stat => (
           <View key={stat.label} className="flex-1 items-center">
             <Text className="text-[20px] font-bold leading-[28px] text-[#292D29]">{stat.value}</Text>
             <Text className="mt-[3px] text-[13px] leading-[18px] text-[#898C86]">{stat.label}</Text>

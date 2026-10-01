@@ -1,12 +1,9 @@
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { CalendarDaysIcon, MapPinIcon } from '@/components/icons/lucide-icons';
-import { ITEM_TYPE_LABEL, type CampusItem } from '@/data/mock-items';
-
-const BADGE_STYLE: Record<CampusItem['type'], { bg: string; text: string }> = {
-  lost: { bg: '#F4D2CD', text: '#9E534F' },
-  found: { bg: '#F8DFA5', text: '#786234' },
-};
+import type { CampusItem } from '@/features/items/item';
+import { getItemImageSource } from '@/features/items/item-images';
+import { getItemStatusLabel, getItemStatusStyle } from '@/features/items/item-presentation';
 
 type SearchResultCardProps = {
   item: CampusItem;
@@ -14,16 +11,16 @@ type SearchResultCardProps = {
 };
 
 export function SearchResultCard({ item, onPress }: SearchResultCardProps) {
-  const badge = BADGE_STYLE[item.type];
+  const badge = getItemStatusStyle(item);
   return (
     <Pressable
       className="h-[105px] flex-row rounded-[15px] bg-[#FFFDF9]"
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`${item.title}，${ITEM_TYPE_LABEL[item.type]}，${item.location}`}
+      accessibilityLabel={`${item.title}，${getItemStatusLabel(item)}，${item.location}`}
     >
       <Image
-        source={item.image}
+        source={getItemImageSource(item)}
         className="ml-[6px] h-[71px] w-[91px] self-center rounded-[8px] bg-[#D9C6A8]"
         resizeMode="contain"
       />
@@ -37,7 +34,7 @@ export function SearchResultCard({ item, onPress }: SearchResultCardProps) {
             style={{ backgroundColor: badge.bg }}
           >
             <Text className="text-[13px] font-semibold" style={{ color: badge.text }}>
-              {ITEM_TYPE_LABEL[item.type]}
+              {getItemStatusLabel(item)}
             </Text>
           </View>
         </View>

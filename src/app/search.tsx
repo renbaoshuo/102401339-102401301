@@ -11,15 +11,13 @@ import { SearchEmptyState } from '@/components/search/search-empty-state';
 import { SearchInput } from '@/components/search/search-input';
 import { SearchResultCard } from '@/components/search/search-result-card';
 import {
-  MOCK_ITEMS,
   SORT_OPTIONS,
-  matchesArea,
-  matchesTime,
-  sortItems,
+  queryItems,
   type AreaOption,
   type SortOption,
   type TimeOption,
-} from '@/data/mock-items';
+} from '@/features/items/item-query';
+import { useItems } from '@/features/items/items-context';
 
 export default function SearchScreen() {
   const params = useLocalSearchParams<{ q?: string }>();
@@ -33,24 +31,11 @@ export default function SearchScreen() {
   const [sort, setSort] = useState<SortOption>('默认排序');
   const [panelOpen, setPanelOpen] = useState(false);
   const [panelTop, setPanelTop] = useState(0);
+  const { items, refreshing, refresh, error } = useItems();
 
-  const results = useMemo(() => {
-    const lowerKeyword = keyword.trim().toLowerCase();
-    const filtered = MOCK_ITEMS.filter((item) => {
-      if (filter !== 'all' && item.type !== filter) {
-        return false;
-      }
-      if (!matchesArea(item.location, area) || !matchesTime(item.date, time)) {
-        return false;
-      }
-      if (!lowerKeyword) {
-        return true;
-      }
-      return item.title.toLowerCase().includes(lowerKeyword)
-        || item.location.toLowerCase().includes(lowerKeyword);
-    });
-    return sortItems(filtered, sort);
-  }, [keyword, filter, area, time, sort]);
+  const results = useMemo(() => queryItems(items, {
+    keyword, type: filter, area, time, sort,
+  }), [items, keyword, filter, area, time, sort]);
 
   const submit = () => {
     setKeyword(query);
@@ -115,6 +100,9 @@ export default function SearchScreen() {
         <FlatList
           className="mt-[18px] flex-1"
           data={results}
+          refreshing={refreshing}
+          onRefresh={() => void refresh()}
+          ListFooterComponent={error ? <Text className="p-4 text-center text-[#9E534F]">{error}</Text> : null}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <SearchResultCard

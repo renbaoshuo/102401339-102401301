@@ -2512,6 +2512,11 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
+await-lock@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/await-lock/-/await-lock-2.2.2.tgz#a95a9b269bfd2f69d22b17a321686f551152bcef"
+  integrity sha512-aDczADvlvTGajTDjcjpJMqRkOF6Qdz3YbPZm/PyW6tKPkx2hlYBzxMhEywM/tU72HrVZjgl5VCdRuMlA7pZ8Gw==
+
 babel-jest@^29.7.0:
   version "29.7.0"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-29.7.0.tgz#f4369919225b684c56085998ac63dbd05be020d5"
@@ -3811,6 +3816,13 @@ expo-splash-screen@~55.0.25:
   integrity sha512-Jl3VPbNqbgGjXlkH93hi4Y4p6GB5DasLNbpL2Gb4kl8grujKaIGi4rXL25qYbYxIzefSlt96NqG9czanxxooPg==
   dependencies:
     "@expo/prebuild-config" "^55.0.22"
+
+expo-sqlite@~55.0.20:
+  version "55.0.20"
+  resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-55.0.20.tgz#0d091217f049369916668ba2625688d54f65de57"
+  integrity sha512-6Jbomg5GpHxV3G4dWDgB7bBhZ15eOd5rFlw365Vg5p/CBpJ0KAfQOAcA8eoIemTUHTL0BWTLZlcLfbQg9Pvv/Q==
+  dependencies:
+    await-lock "^2.2.2"
 
 expo-symbols@^55.0.9:
   version "55.0.9"

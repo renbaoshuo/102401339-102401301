@@ -1,6 +1,6 @@
 import { Pressable, Text, View } from 'react-native';
 
-import type { ItemType } from '@/data/mock-items';
+import type { ItemType } from '@/features/items/item';
 
 export type HomeFilter = 'all' | ItemType;
 
