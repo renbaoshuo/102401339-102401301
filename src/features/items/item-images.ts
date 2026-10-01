@@ -12,11 +12,13 @@ const ITEM_IMAGES: Record<ItemImageKey, ImageSourcePropType> = {
   'card-green': require('@/assets/images/home/card-green.png'),
 };
 
-export function getItemImageSource(item: CampusItem): ImageSourcePropType | undefined {
+const ITEM_PLACEHOLDER = require('@/assets/images/home/item-placeholder.png');
+
+export function getItemImageSource(item: CampusItem): ImageSourcePropType {
   if (item.imageUri) {
     return { uri: item.imageUri };
   }
-  return item.imageAssetKey ? ITEM_IMAGES[item.imageAssetKey] : undefined;
+  return item.imageAssetKey ? ITEM_IMAGES[item.imageAssetKey] : ITEM_PLACEHOLDER;
 }
 
 export function getItemThumbTint(item: CampusItem): string {
