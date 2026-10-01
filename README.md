@@ -12,7 +12,7 @@
 
 ## 环境要求
 
-- Node.js ≥ 20.19
+- Node.js ≥ 24
 - yarn 1.22.22
 
 ## 快速开始
@@ -37,6 +37,7 @@ yarn web          # 浏览器
 ```
 ├── app.json                # Expo 应用配置
 ├── babel.config.js         # Babel 配置
+├── jest.config.js          # Jest 配置
 ├── metro.config.js         # Metro 配置
 ├── tailwind.config.js      # Tailwind / NativeWind 配置
 ├── global.css              # NativeWind 样式入口
