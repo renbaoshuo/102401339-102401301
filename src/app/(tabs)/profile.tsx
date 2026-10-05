@@ -58,7 +58,7 @@ export default function ProfileScreen() {
             <MyPostCard
               item={item}
               disabled={busy}
-              onEdit={() => {}}
+              onEdit={() => router.push({ pathname: '/edit/[id]', params: { id: item.id } })}
               onViewDetail={() => openDetail(item.id)}
               onMarkReturned={() => void perform(() => markResolved(item.id))}
               onDelete={() => void perform(() => deleteItem(item.id))}
