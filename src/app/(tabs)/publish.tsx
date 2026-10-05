@@ -1,6 +1,5 @@
 import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRef, useState } from 'react';
 import {
   Image,
@@ -14,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AreaSheet } from '@/components/publish/area-sheet';
+import { DateTimeInput } from '@/components/publish/date-time-input';
 import { PublishSuccess } from '@/components/publish/publish-success';
 import { ImagePlusIcon } from '@/components/icons/lucide-icons';
 import { localDateString } from '@/features/items/item-query';
@@ -41,8 +41,6 @@ export default function PublishScreen() {
   const [contact, setContact] = useState('');
   const [images, setImages] = useState<string[]>([]);
   const [areaSheetOpen, setAreaSheetOpen] = useState(false);
-  const [pickerStage, setPickerStage] = useState<'date' | 'time' | null>(null);
-  const [draftDate, setDraftDate] = useState(() => new Date());
   const [hint, setHint] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [published, setPublished] = useState<CampusItem | null>(null);
@@ -180,21 +178,7 @@ export default function PublishScreen() {
           />
           <View className="mt-[18px]">
             <FieldLabel>丢失/捡到时间</FieldLabel>
-            <Pressable
-              className={`${INPUT_CLASS} flex-row items-center`}
-              onPress={() => {
-                setDraftDate(dateTime ?? new Date());
-                setPickerStage('date');
-              }}
-              accessibilityRole="button"
-              accessibilityLabel="选择时间"
-            >
-              <Text className={`text-[14px] ${dateTime ? 'text-[#292D29]' : ''}`} style={dateTime ? undefined : { color: PLACEHOLDER }}>
-                {dateTime
-                  ? `${localDateString(dateTime.getTime())} ${String(dateTime.getHours()).padStart(2, '0')}:${String(dateTime.getMinutes()).padStart(2, '0')}`
-                  : '请选择时间'}
-              </Text>
-            </Pressable>
+            <DateTimeInput value={dateTime} onChange={setDateTime} />
           </View>
           <View className="mt-[18px]">
             <FieldLabel>丢失/捡到地点</FieldLabel>
@@ -313,32 +297,6 @@ export default function PublishScreen() {
         }}
         onClose={() => setAreaSheetOpen(false)}
       />
-      {pickerStage
-        ? (
-            <DateTimePicker
-              value={draftDate}
-              mode={pickerStage}
-              is24Hour
-              maximumDate={pickerStage === 'date' ? new Date() : undefined}
-              onChange={(event, selected) => {
-                if (event.type === 'dismissed') {
-                  setPickerStage(null);
-                  return;
-                }
-                const next = selected ?? draftDate;
-                if (pickerStage === 'date') {
-                  setDraftDate(next);
-                  setPickerStage('time');
-                  return;
-                }
-                const combined = new Date(draftDate);
-                combined.setHours(next.getHours(), next.getMinutes(), 0, 0);
-                setDateTime(combined);
-                setPickerStage(null);
-              }}
-            />
-          )
-        : null}
     </SafeAreaView>
   );
 }
