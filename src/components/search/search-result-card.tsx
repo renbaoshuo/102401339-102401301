@@ -21,7 +21,8 @@ export function SearchResultCard({ item, onPress }: SearchResultCardProps) {
     >
       <Image
         source={getItemImageSource(item)}
-        className="ml-[6px] h-[71px] w-[91px] self-center rounded-[8px] bg-[#D9C6A8]"
+        className="ml-[6px] self-center rounded-[8px] bg-[#D9C6A8]"
+        style={{ width: 91, height: 71 }}
         resizeMode="contain"
       />
       <View className="flex-1 pl-[7px] pr-[13px] pt-[14px]">

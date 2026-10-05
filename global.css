@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Web only: keep the phone layout on wide screens by capping the app width and centering it */
+body {
+  --app-max-width: 430px;
+  background-color: #f8f4ed;
+}
+
+#root,
+[aria-modal='true'] {
+  width: 100%;
+  max-width: var(--app-max-width);
+  margin-inline: auto;
+}

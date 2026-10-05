@@ -1,4 +1,4 @@
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 
 import { CircleCheckIcon } from '@/components/icons/lucide-icons';
 import { getItemImageSource } from '@/features/items/item-images';
@@ -20,7 +20,7 @@ export function PublishSuccess({ item, onViewDetail, onBackHome, variant = 'publ
       <View className="h-[52px] items-center justify-center">
         <Text className="text-[20px] font-semibold text-[#292D29]">{editing ? '编辑成功' : '发布成功'}</Text>
       </View>
-      <View className="flex-1 items-center px-[24px]">
+      <ScrollView className="flex-1" contentContainerStyle={{ alignItems: 'center', paddingHorizontal: 24, paddingBottom: 24 }}>
         <View className="mt-[86px] size-[148px] items-center justify-center rounded-full bg-[#E6EFDF]">
           <View className="size-[108px] items-center justify-center rounded-full bg-[#FFFDF9]">
             <CircleCheckIcon size={44} color="#5F834B" strokeWidth={2} />
@@ -36,6 +36,7 @@ export function PublishSuccess({ item, onViewDetail, onBackHome, variant = 'publ
           <Image
             source={getItemImageSource(item)}
             className="size-[82px] rounded-[10px] bg-[#E9E1D5]"
+            style={{ width: 82, height: 82 }}
             resizeMode="contain"
           />
           <View className="ml-[15px] flex-1 pr-[16px]">
@@ -63,7 +64,7 @@ export function PublishSuccess({ item, onViewDetail, onBackHome, variant = 'publ
         >
           <Text className="text-[14px] font-semibold text-[#5F834B]">返回首页</Text>
         </Pressable>
-      </View>
+      </ScrollView>
     </View>
   );
 }

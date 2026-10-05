@@ -8,7 +8,6 @@ import {
   ScrollView,
   Text,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -36,14 +35,16 @@ const HERO_IMAGE = require('@/assets/images/home/detail-hero.jpg');
 const HERO_RATIO = 402 / 274;
 
 // 设计稿仅提供了蓝色校园卡的实拍 hero,其余物品用物品图衬在暖色底上
-function ItemHero({ item, height }: { item: CampusItem; height: number }) {
+function ItemHero({ item }: { item: CampusItem }) {
   if (item.id === '2' && item.imageAssetKey === 'campus-card' && !item.imageUri) {
     return (
-      <Image source={HERO_IMAGE} style={{ width: '100%', height }} resizeMode="cover" />
+      <View style={{ width: '100%', aspectRatio: HERO_RATIO }}>
+        <Image source={HERO_IMAGE} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+      </View>
     );
   }
   return (
-    <View style={{ height }} className="items-center justify-center bg-[#EDE4D6]">
+    <View style={{ width: '100%', aspectRatio: HERO_RATIO }} className="items-center justify-center bg-[#EDE4D6]">
       <Image source={getItemImageSource(item)} style={{ width: '72%', height: '78%' }} resizeMode="contain" />
     </View>
   );
@@ -52,9 +53,7 @@ function ItemHero({ item, height }: { item: CampusItem; height: number }) {
 export default function ItemDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const item = useItem(id);
-  const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  const heroHeight = Math.round(width / HERO_RATIO);
 
   const toastOpacity = useRef(new Animated.Value(0)).current;
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -131,7 +130,7 @@ export default function ItemDetailScreen() {
           </Pressable>
         </View>
         <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 32 }}>
-          <ItemHero item={item} height={heroHeight} />
+          <ItemHero item={item} />
           <View className="flex-row items-center justify-between px-[24px] pt-[14px]">
             <Text className="shrink text-[22px] font-bold text-[#292D29]" numberOfLines={1}>
               {item.title}

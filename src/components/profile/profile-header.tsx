@@ -23,7 +23,7 @@ export function ProfileHeader({ stats }: { stats: ReturnType<typeof getProfileSt
         </Pressable>
       </View>
       <View className="flex-row pl-[37px] pt-[13px]">
-        <Image source={PROFILE.avatar} className="size-[86px] rounded-full bg-[#EBD9B4]" />
+        <Image source={PROFILE.avatar} className="rounded-full bg-[#EBD9B4]" style={{ width: 86, height: 86 }} />
         <View className="ml-[16px] justify-center pt-[10px]">
           <Text className="text-[24px] font-bold leading-[32px] text-[#292D29]">{PROFILE.name}</Text>
           <Text className="mt-[5px] text-[14px] leading-[20px] text-[#898C86]">{PROFILE.tagline}</Text>

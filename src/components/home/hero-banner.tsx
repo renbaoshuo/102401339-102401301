@@ -1,4 +1,4 @@
-import { Image, Text, View, useWindowDimensions } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
 const HERO_IMAGE = require('@/assets/images/home/hero-campus.jpg');
 
@@ -7,11 +7,8 @@ const HERO_RATIO = 804 / 550;
 const TEXT_BLOCK_HEIGHT = 55;
 
 export function HeroBanner() {
-  const { width } = useWindowDimensions();
-  const heroHeight = Math.round(width / HERO_RATIO);
-
   return (
-    <View style={{ width: '100%', height: heroHeight }}>
+    <View style={{ width: '100%', aspectRatio: HERO_RATIO }}>
       <Image source={HERO_IMAGE} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
       <View
         pointerEvents="none"
@@ -20,7 +17,8 @@ export function HeroBanner() {
           left: 0,
           width: '57%',
           alignItems: 'center',
-          top: heroHeight * 0.6835 - TEXT_BLOCK_HEIGHT / 2,
+          top: '68.35%',
+          marginTop: -TEXT_BLOCK_HEIGHT / 2,
           transform: [{ rotate: '-4deg' }],
         }}
       >

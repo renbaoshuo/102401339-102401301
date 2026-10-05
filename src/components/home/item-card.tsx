@@ -21,7 +21,8 @@ export function ItemCard({ item, onPress }: ItemCardProps) {
     >
       <Image
         source={getItemImageSource(item)}
-        className="h-[81px] w-[102px] rounded-[12px] bg-[#F0E4DA]"
+        className="rounded-[12px] bg-[#F0E4DA]"
+        style={{ width: 102, height: 81 }}
         resizeMode="contain"
       />
       <View className="flex-1 pl-[17px] pr-[12px] pt-[13px]">

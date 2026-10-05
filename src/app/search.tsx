@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { FlatList, Keyboard, Pressable, Text, View } from 'react-native';
+import { FlatList, Keyboard, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FilterTabs, type HomeFilter } from '@/components/home/filter-tabs';
@@ -125,13 +125,19 @@ export default function SearchScreen() {
                   onPress={() => setPanelOpen(false)}
                   accessibilityLabel="关闭筛选"
                 />
-                <FilterPanel
-                  area={area}
-                  time={time}
-                  onAreaChange={setArea}
-                  onTimeChange={setTime}
-                  onConfirm={() => setPanelOpen(false)}
-                />
+                <ScrollView
+                  style={{ flexGrow: 0 }}
+                  contentContainerStyle={{ paddingBottom: 16 }}
+                  keyboardShouldPersistTaps="handled"
+                >
+                  <FilterPanel
+                    area={area}
+                    time={time}
+                    onAreaChange={setArea}
+                    onTimeChange={setTime}
+                    onConfirm={() => setPanelOpen(false)}
+                  />
+                </ScrollView>
               </View>
             )
           : null}

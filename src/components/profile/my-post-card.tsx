@@ -35,8 +35,8 @@ export function MyPostCard({ item, disabled, onEdit, onMarkReturned, onViewDetai
     <View className="h-[108px] flex-row rounded-[15px] bg-[#FFFDF9] pl-[7px]">
       <Image
         source={getItemImageSource(item)}
-        className="h-[71px] w-[91px] self-center rounded-[8px]"
-        style={{ backgroundColor: getItemThumbTint(item) }}
+        className="self-center rounded-[8px]"
+        style={{ width: 91, height: 71, backgroundColor: getItemThumbTint(item) }}
         resizeMode="contain"
       />
       <View className="flex-1 pl-[13px] pr-[16px] pt-[13px]">
@@ -91,7 +91,7 @@ function ActionButton({
 }) {
   return (
     <Pressable
-      className="h-[28px] items-center justify-center rounded-[14px] border border-[#CFC8BE] bg-[#FFFDF9]"
+      className="h-[28px] shrink items-center justify-center rounded-[14px] border border-[#CFC8BE] bg-[#FFFDF9]"
       onPress={onPress}
       disabled={disabled}
       accessibilityState={{ disabled }}

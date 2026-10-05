@@ -234,7 +234,7 @@ export default function PublishScreen() {
           </View>
           <View className="mt-[18px]">
             <FieldLabel>上传图片</FieldLabel>
-            <View className="mt-[5px] flex-row items-center">
+            <View className="mt-[5px] flex-row flex-wrap items-center gap-[16px]">
               {images.length < MAX_IMAGES
                 ? (
                     <Pressable
@@ -252,12 +252,13 @@ export default function PublishScreen() {
                 : null}
               {images.length > 0
                 ? (
-                    <View className="flex-row items-center gap-[10px]">
+                    <>
                       {images.map((uri, index) => (
                         <View key={uri} className="relative">
                           <Image
                             source={{ uri }}
-                            className="h-[109px] w-[109px] rounded-[13px] bg-[#F1EBE3]"
+                            className="rounded-[13px] bg-[#F1EBE3]"
+                            style={{ width: 109, height: 109 }}
                             resizeMode="cover"
                           />
                           <Pressable
@@ -271,12 +272,13 @@ export default function PublishScreen() {
                           </Pressable>
                         </View>
                       ))}
-                    </View>
+                    </>
                   )
                 : (
                     <Image
                       source={PUBLISH_STICKER}
-                      className="ml-[24px] h-[100px] flex-1"
+                      className="ml-[8px] flex-1"
+                      style={{ height: 100 }}
                       resizeMode="contain"
                     />
                   )}
