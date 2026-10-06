@@ -16,7 +16,6 @@ import { DetailBadge } from '@/components/detail/detail-badge';
 import {
   ChevronLeftIcon,
   ClockIcon,
-  EllipsisIcon,
   MapPinIcon,
   PhoneIcon,
 } from '@/components/icons/lucide-icons';
@@ -110,7 +109,7 @@ export default function ItemDetailScreen() {
   return (
     <View className="flex-1 bg-[#F8F4ED]">
       <SafeAreaView edges={['top', 'left', 'right']} className="flex-1">
-        <View className="h-[52px] flex-row items-start justify-between px-[19px] pt-[8px]">
+        <View className="h-[52px] flex-row items-start px-[19px] pt-[8px]">
           <Pressable
             className="size-[24px] items-center justify-center"
             onPress={() => router.back()}
@@ -119,14 +118,6 @@ export default function ItemDetailScreen() {
             accessibilityLabel="返回"
           >
             <ChevronLeftIcon size={24} color="#292D29" strokeWidth={2.1} />
-          </Pressable>
-          <Pressable
-            className="size-[28px] items-center justify-center"
-            hitSlop={8}
-            accessibilityRole="button"
-            accessibilityLabel="更多操作"
-          >
-            <EllipsisIcon size={28} color="#292D29" strokeWidth={2} />
           </Pressable>
         </View>
         <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 32 }}>
