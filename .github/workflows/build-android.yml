@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +24,10 @@ jobs:
         with:
           node-version: 22
           cache: yarn
+
+      - name: Read app version
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
       - run: corepack enable
 
@@ -45,3 +52,17 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Publish alpha release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}-alpha.${{ github.run_number }}
+          name: Alpha Build ${{ github.run_number }}
+          prerelease: true
+          body: |
+            Automated alpha build from commit ${{ github.sha }}.
+
+            - Branch: ${{ github.ref_name }}
+            - Triggered by: ${{ github.actor }}
+          files: android/app/build/outputs/apk/release/app-release.apk
