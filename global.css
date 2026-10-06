@@ -14,3 +14,11 @@ body {
   max-width: var(--app-max-width);
   margin-inline: auto;
 }
+
+/* Web only: hide the browser's default focus outline on text inputs */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: none;
+}
